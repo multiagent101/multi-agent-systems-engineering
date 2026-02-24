@@ -1,0 +1,17 @@
+# Listing 14.1 — Minimal container topology (illustrative).
+version: "3.9"
+services:
+  coordinator:
+    image: mas-coordinator:latest
+    environment:
+      - MAS_ROLE=coordinator
+      - MAS_STATE_URL=${MAS_STATE_URL}
+      - MAS_BIND_ADDR=0.0.0.0:8080
+    ports:
+      - "8080:8080"
+  worker:
+    image: mas-worker:latest
+    environment:
+      - MAS_ROLE=worker
+      - MAS_COORDINATOR_URL=http://coordinator:8080
+      - MAS_WORKER_CONCURRENCY=2
